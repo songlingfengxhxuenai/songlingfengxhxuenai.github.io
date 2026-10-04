@@ -117,20 +117,24 @@ function renderExperience(data) {
   return `<ul class="exp">${rows}</ul>`;
 }
 
-function renderProject(item) {
+function renderProject(item, index) {
   const name = filled(item.name);
   const summary = filled(item.summary);
   const url = safeUrl(item.url);
+  const num = String(index + 1).padStart(2, "0");
   const tags = asList(item.tags)
     .map(filled)
     .filter(Boolean)
     .map((tag) => `<li>${escapeHtml(tag)}</li>`)
     .join("");
   const inner = `
-    <h3>${escapeHtml(name)}</h3>
-    ${summary ? `<p>${escapeHtml(summary)}</p>` : ""}
-    ${tags ? `<ul class="tags">${tags}</ul>` : ""}
-    ${url ? `<span class="more">查看 ${ARROW}</span>` : ""}
+    <span class="project-num">${num}</span>
+    <span class="project-main">
+      <h3>${escapeHtml(name)}</h3>
+      ${summary ? `<p>${escapeHtml(summary)}</p>` : ""}
+      ${tags ? `<ul class="tags">${tags}</ul>` : ""}
+    </span>
+    <span class="more">${url ? ARROW : ""}</span>
   `;
   if (!url) return `<article class="project">${inner}</article>`;
   return `<a class="project" href="${escapeHtml(url)}"${linkAttrs(url)}>${inner}</a>`;
@@ -139,7 +143,7 @@ function renderProject(item) {
 function renderProjects(data) {
   const items = asList(data.projects).filter((item) => item && filled(item.name));
   if (!items.length) return "";
-  return `<div class="projects">${items.map(renderProject).join("")}</div>`;
+  return `<div class="projects">${items.map((item, index) => renderProject(item, index)).join("")}</div>`;
 }
 
 function renderSkills(data) {
@@ -169,17 +173,14 @@ function renderContact(data) {
   return `${emailHtml}${links}`;
 }
 
-function renderRail(name, sections) {
-  const brand = filled(name)
-    ? `<p class="rail-brand"><a href="#top">${escapeHtml(filled(name))}</a></p>`
-    : "";
+function renderRail(sections) {
   const nav = sections
     .map((section, index) => {
       const num = String(index + 1).padStart(2, "0");
       return `<a href="#${section.id}" data-spy-link="${section.id}"><span class="num">${num}</span>${escapeHtml(section.label)}</a>`;
     })
     .join("");
-  return `${brand}<nav class="rail-nav" aria-label="章节">${nav}</nav>`;
+  return `<nav class="rail-nav" aria-label="章节">${nav}</nav>`;
 }
 
 function mountMotion() {
@@ -196,7 +197,7 @@ function mountMotion() {
   };
 
   const updateSpy = () => {
-    const marker = Math.min(window.innerHeight * 0.28, 220);
+    const marker = Math.min(window.innerHeight * 0.14, 130);
     let current = null;
     sections.forEach((section) => {
       if (section.getBoundingClientRect().top <= marker) current = section;
@@ -246,13 +247,13 @@ function render(data) {
     .map((section, index) => {
       const num = String(index + 1).padStart(2, "0");
       return `<section id="${section.id}" class="block reveal" data-spy>
-        <h2 class="eyebrow"><span class="num">${num}</span>${escapeHtml(section.label)}</h2>
-        ${section.body}
+        <h2 class="eyebrow"><span class="num">${num}</span><span>${escapeHtml(section.label)}</span></h2>
+        <div class="block-body">${section.body}</div>
       </section>`;
     })
     .join("");
 
-  document.getElementById("rail").innerHTML = renderRail(data.name, sections);
+  document.getElementById("rail").innerHTML = renderRail(sections);
   document.getElementById("foot").innerHTML = "<p>改 content.json 即可更新这页。</p>";
   mountMotion();
 }

@@ -44,4 +44,4 @@ python -m http.server 5500
 
 ## 改颜色
 
-配色在 [`styles.css`](styles.css) 最上面的变量里。`--bg` 是底色，`--text` 是正文，`--accent` 是铜金色。标题用 Newsreader（中文回退到思源宋体），正文用 Outfit（中文回退到思源黑体）。字体从 Google Fonts 加载；如果字体没有加载出来，会改用系统里的宋体和黑体。
+配色在 [`styles.css`](styles.css) 最上面的变量里。`--ink` 是左侧深色，`--paper` 是右侧纸色，`--accent` 是朱红色。字体用系统里的宋体和黑体，不依赖外部字体服务。
