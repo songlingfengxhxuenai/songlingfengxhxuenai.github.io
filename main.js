@@ -65,7 +65,17 @@ function renderHero(data) {
   if (role) parts.push(`<p class="role hero-line">${escapeHtml(role)}</p>`);
   if (tagline) parts.push(`<p class="tagline hero-line">${escapeHtml(tagline)}</p>`);
   if (links) parts.push(links);
+  parts.push(renderMarquee(data));
   return parts.join("");
+}
+
+function renderMarquee(data) {
+  const items = asList(data.skills).flatMap((group) =>
+    asList(group && group.items).map(filled).filter(Boolean)
+  );
+  if (items.length < 2) return "";
+  const chunk = items.map((item) => `<span>${escapeHtml(item)}</span><i></i>`).join("");
+  return `<div class="marquee hero-line" aria-hidden="true"><div class="marquee-track">${chunk}${chunk}</div></div>`;
 }
 
 function renderAbout(data) {
@@ -97,14 +107,14 @@ function renderExperience(data) {
   const items = asList(data.experience).filter((item) => item && (filled(item.role) || filled(item.org)));
   if (!items.length) return "";
   const rows = items
-    .map((item) => {
+    .map((item, index) => {
       const role = filled(item.role);
       const org = filled(item.org);
       const title = role || org;
       const subtitle = role ? org : "";
       const period = filled(item.period);
       const detail = filled(item.detail);
-      return `<li class="exp-item" tabindex="0">
+      return `<li class="exp-item tone-${index % 4}" tabindex="0">
         ${period ? `<p class="period">${escapeHtml(period)}</p>` : "<span></span>"}
         <div>
           <h3>${escapeHtml(title)}</h3>
@@ -136,8 +146,8 @@ function renderProject(item, index) {
     </span>
     <span class="more">${url ? ARROW : ""}</span>
   `;
-  if (!url) return `<article class="project">${inner}</article>`;
-  return `<a class="project" href="${escapeHtml(url)}"${linkAttrs(url)}>${inner}</a>`;
+  if (!url) return `<article class="project tone-${index % 4}">${inner}</article>`;
+  return `<a class="project tone-${index % 4}" href="${escapeHtml(url)}"${linkAttrs(url)}>${inner}</a>`;
 }
 
 function renderProjects(data) {
@@ -246,7 +256,7 @@ function render(data) {
   document.getElementById("content").innerHTML = sections
     .map((section, index) => {
       const num = String(index + 1).padStart(2, "0");
-      return `<section id="${section.id}" class="block reveal" data-spy>
+      return `<section id="${section.id}" class="block reveal tone-${index % 4}" data-spy>
         <h2 class="eyebrow"><span class="num">${num}</span><span>${escapeHtml(section.label)}</span></h2>
         <div class="block-body">${section.body}</div>
       </section>`;
