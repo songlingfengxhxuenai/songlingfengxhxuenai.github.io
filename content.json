@@ -1,0 +1,79 @@
+{
+  "$schema": "./content.schema.json",
+  "name": "你的名字",
+  "role": "学生 · 把方向写在这里",
+  "location": "把城市写在这里",
+  "tagline": "用一句话说明你在做什么。这句话会显示在名字下面，也会用作网页简介。",
+  "about": [
+    "这里写一段自我介绍。可以说你学什么、关心什么、最近在做什么。",
+    "第二段可以写你希望别人怎么找到你，或者你想合作的方向。不需要就删掉这一段。"
+  ],
+  "email": "hello@example.com",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/songlingfengxhxuenai"
+    },
+    {
+      "label": "邮箱",
+      "url": "mailto:hello@example.com"
+    }
+  ],
+  "education": [
+    {
+      "school": "某某大学",
+      "program": "计算机科学与技术 · 本科",
+      "period": "2023 — 2027",
+      "detail": "在这里写方向、课程，或一段你在学校做的事。"
+    },
+    {
+      "school": "某某中学",
+      "program": "高中",
+      "period": "2020 — 2023",
+      "detail": "不需要的经历直接删掉整条。"
+    }
+  ],
+  "experience": [
+    {
+      "org": "学生工作室",
+      "role": "成员",
+      "period": "2025 — 现在",
+      "detail": "用一两句写你具体做了什么，以及做成了什么。把鼠标移到这行上看看其余经历如何变淡。"
+    },
+    {
+      "org": "课程项目组",
+      "role": "负责人",
+      "period": "2024 秋",
+      "detail": "第二段经历。没有的话，把这一整条从数组里删掉即可。"
+    }
+  ],
+  "projects": [
+    {
+      "name": "课程小站",
+      "summary": "用一两句话写这个项目做成了什么、你负责哪一块。链接可以先指向仓库。",
+      "url": "https://github.com/songlingfengxhxuenai",
+      "tags": ["HTML", "CSS"]
+    },
+    {
+      "name": "实验笔记",
+      "summary": "记录一次实验或作业：问题是什么，你怎么做的，结果如何。",
+      "url": "https://github.com/songlingfengxhxuenai",
+      "tags": ["Python"]
+    },
+    {
+      "name": "还没命名的工具",
+      "summary": "第三个项目。没有链接就删掉 url，卡片仍会显示，只是不能点开。",
+      "tags": ["JavaScript"]
+    }
+  ],
+  "skills": [
+    {
+      "group": "语言",
+      "items": ["Python", "JavaScript", "C"]
+    },
+    {
+      "group": "工具",
+      "items": ["Git", "VS Code", "Linux"]
+    }
+  ]
+}

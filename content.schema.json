@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "content.schema.json",
+  "title": "个人主页内容",
+  "description": "改这个文件旁边的 content.json 即可更新网站。空数组对应的板块不会显示。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["name"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "指向本文件，方便编辑器提示字段。请保留。"
+    },
+    "name": {
+      "type": "string",
+      "description": "显示在页面上的名字。"
+    },
+    "role": {
+      "type": "string",
+      "description": "一句话身份，例如「学生 · 前端」。"
+    },
+    "location": {
+      "type": "string",
+      "description": "城市或学校，显示在名字上方。"
+    },
+    "tagline": {
+      "type": "string",
+      "description": "名字下方的一句介绍，同时用作网页简介。"
+    },
+    "about": {
+      "type": "array",
+      "description": "关于我，每一项是一段。",
+      "items": { "type": "string" }
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "联系区里大字显示的邮箱。"
+    },
+    "links": {
+      "type": "array",
+      "description": "GitHub、邮箱或其他公开链接。",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["label", "url"],
+        "properties": {
+          "label": { "type": "string", "description": "链接文字。" },
+          "url": {
+            "type": "string",
+            "description": "以 https:// 或 mailto: 开头。"
+          }
+        }
+      }
+    },
+    "education": {
+      "type": "array",
+      "description": "教育经历，按你希望的顺序写，通常近的在前。",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["school"],
+        "properties": {
+          "school": { "type": "string", "description": "学校。" },
+          "program": { "type": "string", "description": "专业或学历。" },
+          "period": { "type": "string", "description": "时间，例如 2023 — 2027。" },
+          "detail": { "type": "string", "description": "补充一句，可留空。" }
+        }
+      }
+    },
+    "experience": {
+      "type": "array",
+      "description": "实习、社团、竞赛或项目经历。",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "org": { "type": "string", "description": "组织或团队。" },
+          "role": { "type": "string", "description": "你的角色。" },
+          "period": { "type": "string", "description": "时间。" },
+          "detail": { "type": "string", "description": "做了什么、结果如何。" }
+        }
+      }
+    },
+    "projects": {
+      "type": "array",
+      "description": "项目。没有 url 时卡片不可点击。",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name"],
+        "properties": {
+          "name": { "type": "string" },
+          "summary": { "type": "string" },
+          "url": { "type": "string", "description": "https:// 开头的项目或仓库地址。" },
+          "tags": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "skills": {
+      "type": "array",
+      "description": "按组写技能。",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["group", "items"],
+        "properties": {
+          "group": { "type": "string", "description": "分组名，例如语言、工具。" },
+          "items": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}
