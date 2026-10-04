@@ -58,24 +58,12 @@ function renderHero(data) {
   const name = filled(data.name) || "个人主页";
   const role = filled(data.role);
   const tagline = filled(data.tagline);
-  const links = renderLinks(data.links, "links hero-line");
 
   if (location) parts.push(`<p class="kicker hero-line">${escapeHtml(location)}</p>`);
   parts.push(`<h1 class="hero-line">${escapeHtml(name)}</h1>`);
   if (role) parts.push(`<p class="role hero-line">${escapeHtml(role)}</p>`);
   if (tagline) parts.push(`<p class="tagline hero-line">${escapeHtml(tagline)}</p>`);
-  if (links) parts.push(links);
-  parts.push(renderMarquee(data));
   return parts.join("");
-}
-
-function renderMarquee(data) {
-  const items = asList(data.skills).flatMap((group) =>
-    asList(group && group.items).map(filled).filter(Boolean)
-  );
-  if (items.length < 2) return "";
-  const chunk = items.map((item) => `<span>${escapeHtml(item)}</span><i></i>`).join("");
-  return `<div class="marquee hero-line" aria-hidden="true"><div class="marquee-track">${chunk}${chunk}</div></div>`;
 }
 
 function renderAbout(data) {
@@ -183,14 +171,15 @@ function renderContact(data) {
   return `${emailHtml}${links}`;
 }
 
-function renderRail(sections) {
+function renderRail(sections, data) {
   const nav = sections
     .map((section, index) => {
       const num = String(index + 1).padStart(2, "0");
       return `<a href="#${section.id}" data-spy-link="${section.id}"><span class="num">${num}</span>${escapeHtml(section.label)}</a>`;
     })
     .join("");
-  return `<nav class="rail-nav" aria-label="章节">${nav}</nav>`;
+  const social = renderLinks(data.links, "social");
+  return `<nav class="rail-nav" aria-label="章节">${nav}</nav>${social}`;
 }
 
 function mountMotion() {
@@ -263,8 +252,9 @@ function render(data) {
     })
     .join("");
 
-  document.getElementById("rail").innerHTML = renderRail(sections);
-  document.getElementById("foot").innerHTML = "<p>改 content.json 即可更新这页。</p>";
+  document.getElementById("rail").innerHTML = renderRail(sections, data);
+  document.getElementById("foot").innerHTML =
+    '<p>改 content.json 即可更新。版式参考 <a href="https://github.com/bchiang7/v4" target="_blank" rel="noreferrer">bchiang7/v4</a>。</p>';
   mountMotion();
 }
 

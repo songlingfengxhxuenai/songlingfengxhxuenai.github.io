@@ -44,4 +44,4 @@ python -m http.server 5500
 
 ## 改颜色
 
-配色在 [`styles.css`](styles.css) 最上面的变量里。`--bg` 是底色，`--coral`、`--violet`、`--mint`、`--gold` 是四块强调色。字体用系统里的宋体和黑体。
+配色和左右分栏来自 GitHub 上星很多的 [bchiang7/v4](https://github.com/bchiang7/v4)：海军蓝底，薄荷绿只用来标章节和链接。字体用系统黑体。`--navy` 是底色，`--green` 是强调色。
